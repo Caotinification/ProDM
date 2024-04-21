@@ -3,7 +3,7 @@ This solution has only been tested on Windows machines. Windows 10 and Windows 1
 
 ### DEPENDENCIES:
 - NodeJS (for NPM)
-~~- Chai, Mocha and Spectron for unit testing~~
+- ~~- Chai, Mocha and Spectron for unit testing~~
 - Jest and ts-Jest for unit testing
 - ElectronJS development environment if you want to edit the files and package them
 
