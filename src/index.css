@@ -1,7 +1,349 @@
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
-    Arial, sans-serif;
-  margin: auto;
-  max-width: 38rem;
-  padding: 2rem;
+  background-image: url('assets/map.png');
+  background-size: cover;
+  background-position: top left;
+  background-repeat: no-repeat;
+  margin: 0;
+  height: 100vh;
+  z-index: 0;
+  overflow: hidden;
+  background-position-y: -20px;
+}
+
+.button-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Center vertically */
+  margin-top: 20px;
+}
+
+.image-button {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0 5px;
+}
+
+.image-button img {
+  width: 50px;
+  height: auto;
+}
+
+#rollButton {
+  position: absolute;
+  top: -282px;
+  left: 7px;
+  margin: -25px 0 0 -25px;
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#result {
+  position: absolute;
+  top: 34px;
+  left: 237px;
+  margin: -19px 0 0 -25px;
+}
+
+
+#rollButton:hover {
+  background-color: #0056b3;
+}
+
+#pulltab {
+  display: block;
+  transform: scaleX(-1);
+}
+
+#pulltab-container.open {
+  right: 150px;
+}
+
+#dragon-container {
+  position: fixed;
+  left: -695px;
+  bottom: -450px;
+  z-index: 10;
+  transform: scale(0.25);
+}
+
+#dice-container {
+  position: absolute;
+  bottom: 650px;
+  left: 890px;
+  transform: translateX(-50%) scale(3.5);
+  transition: top 0.5s ease-out;
+}
+
+#dice-container.hidden {
+  top: 100%;
+  /* Move the dice container out of the viewport */
+}
+
+#dice-container.visible {
+  top: 25%;
+}
+
+#scene-menu-container {
+  position: absolute;
+  top: -1432px;
+  right: -883px;
+  transition: right 0.5s ease;
+  transform: scale(0.33);
+}
+
+#scene-menu-container.open {
+  top: -1432px;
+  right: -677px;
+}
+
+#scenario-container {
+  position: relative;
+  height: 2615px;
+  overflow-y: auto;
+  top: -2028px;
+  transform: scale(0.50);
+  right: 255px;
+}
+
+.select-scenario-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  margin: 190px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transform: scale(3.5);
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.select-scenario-btn:hover {
+  background-color: #45a049;
+}
+
+.scenario {}
+
+.scenario-title {
+  font-size: 128px;
+  max-width: 1000px;
+}
+
+.scenario-narration {
+  font-size: 80px;
+  max-width: 1000px;
+}
+
+.scenario-image {}
+
+
+
+#dragon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  transition: transform 0.5s ease;
+}
+
+
+#dragon-button.active {
+  transform: translateY(-750px);
+}
+
+#sword-container {
+  position: relative;
+  height: 90vh;
+  overflow: visible;
+}
+
+#sword {
+  position: absolute;
+  top: -1800px;
+  left: -142px;
+  transform: scale(0.5);
+  z-index: 9999;
+  transition: top 1s ease;
+}
+
+#sword.dropped {
+  top: calc(100vh - 1200px - 100px);
+}
+
+#sword.retracted {
+  top: -1800px;
+}
+
+#pulltab-container {
+  position: fixed;
+  top: -141px;
+  right: -57px;
+  transform: rotate(-90deg) scale(0.33);
+  transition: right 0.5s ease;
+}
+
+
+#brown-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: brown;
+  z-index: 0;
+}
+
+/* General styling for the arrow button */
+#up-arrow-button {
+  position: fixed;
+  bottom: 30px;
+  left: 500px;
+  z-index: 9999;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* Styling for the arrow image */
+#up-arrow {
+  width: 40px;
+  transform: scale(2.5);
+  height: auto;
+}
+
+/* General styling for the down arrow button */
+#down-arrow-button {
+  position: fixed;
+  bottom: 30px;
+  left: 700px;
+  z-index: 9999;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* Styling for the down arrow image */
+#down-arrow {
+  width: 40px;
+  transform: rotate(180deg) scale(2.5);
+  height: auto;
+}
+
+#plus-button {
+  position: absolute;
+  bottom: 30px;
+  left: 600px;
+  z-index: 9999;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transform: scale(0.70);
+}
+
+
+/* Styling for the plus image */
+#plus {
+  width: 40px;
+  transform: scale(2.8);
+  height: auto;
+}
+
+
+
+#event-maker-button {
+  position: fixed;
+  bottom: 300px;
+  left: 20px;
+  z-index: 0;
+  background-color: #e3c07a;
+  color: rgb(0, 0, 0);
+  /* Text color */
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.button-row {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+}
+
+.image-button {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0 5px;
+}
+
+.image-button img {
+  width: 50px;
+  height: auto;
+}
+
+.hidden {
+  display: none;
+}
+
+#event-cards-container {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.5);
+  z-index: -22;
+}
+
+#event-cards-container img {
+  max-width: 100%;
+  max-height: 100%;
 }

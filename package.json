@@ -24,11 +24,11 @@
   },
   "keywords": [],
   "author": {
-    "name": "Caotinification",
-    "email": "nguyenjustin930@gmail.com"
+    "name": "ProGM-Team"
   },
   "license": "MIT",
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "typescript": "^5.4.5"
   }
 }
