@@ -1,15 +1,16 @@
 {
-  "name": "progm",
-  "productName": "progm",
+  "name": "ProGM",
+  "productName": "ProGM",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "ProGM",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "lint": "echo \"No linting configured\"",
+    "compile": "npx tsc"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.4.0",
@@ -20,7 +21,8 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
     "@electron-forge/plugin-fuses": "^7.4.0",
     "@electron/fuses": "^1.8.0",
-    "electron": "30.0.1"
+    "electron": "30.0.1",
+    "typescript": "^5.4.5"
   },
   "keywords": [],
   "author": {
@@ -28,7 +30,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0",
-    "typescript": "^5.4.5"
+    "electron-squirrel-startup": "^1.0.0"
   }
 }

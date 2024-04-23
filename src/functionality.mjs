@@ -1,3 +1,8 @@
+const Dice = require("./classes/Dice/Dice");
+
+/*
+    Sword Image Handling
+*/
 let isSwordDropped = false;
 
 function dropSword(swordImg) {
@@ -21,7 +26,9 @@ function onSwordClick() {
     }
     isSwordDropped = !isSwordDropped;
 }
-
+/*
+    Dragon Image Handling
+*/
 function onDragonClick() {
     const dragonButton = document.getElementById('dragon-button');
     const diceContainer = document.getElementById('dice-container');
@@ -32,3 +39,15 @@ function onDragonClick() {
     diceContainer.classList.toggle('hidden');
     diceContainer.classList.toggle('visible');
 }
+
+/*
+    Dragon Image Handling
+    --> Dice Handling
+*/
+let selectedDice = [];
+
+function addDie(numSides) {
+    selectedDice.push(new Dice(numSides));
+    document.getElementById("rollButton").style.display = "block";
+}
+
