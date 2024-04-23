@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <script type="text/javascript" src="functionality.mjs"></script>
+  <script type="text/javascript" src="functionality.js"></script>
   <link rel="stylesheet" href="index.css" />
   <style>
     /* Modal styles */
@@ -47,31 +47,31 @@
   <!-- Dragon Container -->
   <div id="dragon-container">
     <button id="dragon-button">
-      <img id="dragon" src="assets/dragon.png" alt="Dragon" onclick="onDragonClick()">
+      <img id="dragon" src="./assets/dragon.png" alt="Dragon">
     </button>
     <!-- Dice Container -->
     <div id="dice-container" class="hidden">
       <div class="button-row">
-        <button id="D4" class="image-button" onclick="addDie(4)">
-          <img src="assets/d4.png" alt="D4">
+        <button class="image-button" onclick="addDie('D4')">
+          <img src="./assets/d4.png" alt="D4">
         </button>
-        <button id="D6" class="image-button" onclick="addDie(6)">
-          <img src="assets/d6.png" alt="D6">
+        <button class="image-button" onclick="addDie('D6')">
+          <img src="./assets/d6.png" alt="D6">
         </button>
-        <button id="D8" class="image-button" onclick="addDie(8)">
-          <img src="assets/d8.png" alt="D8">
+        <button class="image-button" onclick="addDie('D8')">
+          <img src="./assets/d8.png" alt="D8">
         </button>
-        <button id="D10" class="image-button" onclick="addDie(10)">
-          <img src="assets/d10.png" alt="D10">
+        <button class="image-button" onclick="addDie('D10')">
+          <img src="./assets/d10.png" alt="D10">
         </button>
-        <button id="D12" class="image-button" onclick="addDie(12)">
-          <img src="assets/d12.png" alt="D12">
+        <button class="image-button" onclick="addDie('D12')">
+          <img src="./assets/d12.png" alt="D12">
         </button>
-        <button id="D20" class="image-button" onclick="addDie(20)">
-          <img src="assets/d20.png" alt="D20">
+        <button class="image-button" onclick="addDie('D20')">
+          <img src="./assets/d20.png" alt="D20">
         </button>
-        <button id="D100" class="image-button" onclick="addDie(100)">
-          <img src="assets/d100.png" alt="D100">
+        <button class="image-button" onclick="addDie('D100')">
+          <img src="./assets/d100.png" alt="D100">
         </button>
       </div>
       <button id="rollButton" onclick="rollDice()">Roll</button>
@@ -80,17 +80,17 @@
   <div id="event-cards-container"></div>
   <!-- Sword Container -->
   <div id="sword-container">
-    <img id="sword" src="assets/sword.png" alt="Sword" onclick="onSwordClick()">
+    <img id="sword" src="./assets/sword.png" alt="Sword" onclick="onSwordClick()">
   </div>
 
   <!-- Pulltab Container -->
   <div id="pulltab-container">
-    <img id="pulltab" src="assets/pulltab.png" alt="Pull Tab">
+    <img id="pulltab" src="./assets/pulltab.png" alt="Pull Tab" onclick="onPullTabClick()">
   </div>
 
   <!-- Scene Menu Container ADD THINGS HERE TO MAKE MORE SCENES!-->
   <div id="scene-menu-container">
-    <img id="scene-menu" src="assets/scenemenu.png" alt="Scene Menu">
+    <img id="scene-menu" src="./assets/scenemenu.png" alt="Scene Menu">
     <div id="scenario-container">
       <div class="scenario">
         <h3 class="scenario-title">The Unseen Guardian</h3>
@@ -99,7 +99,7 @@
           visible in the dim light and tells the party to buzz off as this place is restricted for commoners and
           adventurers alike. If the party tries to keep causing trouble punish them by placing them by sending 5 gaurds
           above their levels to jail them\]</p>
-        <img class="scenario-image" src="assets/scenario1.jpg" alt="Scenario 1 Image">
+        <img class="scenario-image" src="./assets/scenario1.jpg" alt="Scenario 1 Image">
         <br>
         <button class="select-scenario-btn">Select Scenario</button>
       </div>
@@ -109,7 +109,7 @@
           "X" player dissapears and finds themselves in an overgrown path with foliage. Give them a timed death like the
           air is suffocating so they lose 1D4 of health every 30 seconds and this will make your party panic and run to
           rescue them. The fog dissapears when they are back together!</p>
-        <img class="scenario-image" src="assets/path.jpg" alt="Scenario 2 Image">
+        <img class="scenario-image" src="./assets/path.jpg" alt="Scenario 2 Image">
         <br>
         <button class="select-scenario-btn">Select Scenario</button>
       </div>
@@ -118,7 +118,7 @@
         <p class="scenario-narration">If your party splits up try: Put an enemy that is immune to the main damage type
           of this half of your party is dealing and that will make them go back and grab the other half to defeat this
           new creature.</p>
-        <img class="scenario-image" src="assets/Construct.png" alt="Scenario 3 Image">
+        <img class="scenario-image" src="./assets/Construct.png" alt="Scenario 3 Image">
         <br>
         <button class="select-scenario-btn">Select Scenario</button>
       </div>
@@ -127,14 +127,14 @@
 
   <!-- Arrow Button -->
   <button id="up-arrow-button">
-    <img id="up-arrow" src="assets/Arrow.png" alt="Up Arrow">
+    <img id="up-arrow" src="./assets/Arrow.png" alt="Up Arrow">
   </button>
   <!-- Down Arrow Button -->
   <button id="down-arrow-button">
-    <img id="down-arrow" src="assets/Arrow.png" alt="Down Arrow">
+    <img id="down-arrow" src="./assets/Arrow.png" alt="Down Arrow">
   </button>
   <button id="plus-button">
-    <img id="plus" src="assets/plus.png" alt="Plus">
+    <img id="plus" src="./assets/plus.png" alt="Plus">
   </button>
   <!-- Event Maker Button -->
   <button id="event-maker-button">Event Maker</button>
@@ -164,6 +164,22 @@
       <ul id="historyList"></ul>
     </div>
   </div>
+
+  <div id="result" onclick="showHistory()"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/draggable/1.2.2/draggable.bundle.umd.min.js">
+    import Draggable from 'draggable';
+
+    // Initialize Draggable for each image
+    const images = document.querySelectorAll('.scenario-image');
+    images.forEach(image => {
+      new Draggable(image);
+    });
+
+  </script>
+
+  <script>
+
+  </script>
 </body>
 
 </html>
