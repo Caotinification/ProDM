@@ -1,15 +1,15 @@
-class UnitError extends Error {}
+class UnitError extends Error { }
 
 const tolerance = 0.01;
-/*
-    DICE
+/** 
+ * Dice Menu
 */
 class Dice {
     #pmf = new Array();
     #cdf = new Array();
     constructor(numSides, weights) {
         this.sides = numSides;
-        this.#pmf = weights ? weights : new Array(numSides).fill(1/numSides)
+        this.#pmf = weights ? weights : new Array(numSides).fill(1 / numSides)
         let unitSum = this.#pmf.reduce((acc, x) => acc + x)
         if (Math.abs(1 - unitSum) >= tolerance) {
             throw new UnitError('Sum of weights does not equal 1.');
@@ -25,13 +25,13 @@ class Dice {
         return `D${this.sides}`
     }
 }
-/*
-    EventNode
+/** 
+ * EventNode
 */
 const DELIMITER = '\t';
 
-class InvariantViolation extends Error {}
-class SelfLoopViolation extends Error {}
+class InvariantViolation extends Error { }
+class SelfLoopViolation extends Error { }
 
 class EventNode {
 
@@ -39,9 +39,9 @@ class EventNode {
         this.name = name;
         this.description = description ?? this.description;
     }
-    
+
     add(newEvent) {
-        if (newEvent === this){
+        if (newEvent === this) {
             throw new SelfLoopViolation(`Attempt to add a self loop on ${this.name}.`)
         }
         this.#invariant(newEvent);
@@ -56,17 +56,17 @@ class EventNode {
         yield* this.#preorder(0);
     }
 
-    generateLevels(){ // organize nodes by depth where array idx is depth, and array members are nodes at that depth
+    generateLevels() { // organize nodes by depth where array idx is depth, and array members are nodes at that depth
         let levels = new Array();
         for (const [outcome, depth] of this) {
-            levels[depth] = levels[depth] ? levels[depth]: new Array();
+            levels[depth] = levels[depth] ? levels[depth] : new Array();
             levels[depth].push(outcome);
         }
         return levels;
     }
 
     getSize() { // returns total number of nodes and connections
-        let [numNodes, numConnections] = [0,0];
+        let [numNodes, numConnections] = [0, 0];
         for (const [outcome, _] of this) {
             numNodes++;
             numConnections += outcome.outcomes.size;
@@ -92,7 +92,7 @@ class EventNode {
         }
     }
 
-    *#preorder(depth = 0){ // preorder traversal with depth tracking
+    *#preorder(depth = 0) { // preorder traversal with depth tracking
         yield [this, depth];
         if (this.outcomes.size > 0) {
             for (const outcome of this.outcomes.values()) {
@@ -103,8 +103,8 @@ class EventNode {
 }
 
 
-/*
-    Event Creator Menu
+/** 
+ * Event Creator Menu
 */
 function dropSword(swordImg) {
     swordImg.classList.add('dropped');
@@ -123,25 +123,35 @@ function onSwordClick() {
     swordImg.classList.contains('dropped') ? retractSword(swordImg) : dropSword(swordImg);
 }
 
-/*
-    Scenario Menu
+/** 
+ * Scenario Menu
 */
 function onPullTabClick() {
     const pullTab = document.getElementById('pulltab-container');
     const sceneMenuContainer = document.getElementById('scene-menu-container');
 
-    if (!pullTab.classList.contains('open')) {
-        pullTab.classList.add('open');
-        sceneMenuContainer.classList.add('open');
-    } else {
-        pullTab.classList.remove('open');
-        sceneMenuContainer.classList.remove('open');
-    }
+    pullTab.classList.toggle('open');
+    sceneMenuContainer.classList.toggle('open');
 }
 
-/*
-    Dice Menu
+
+function onPlusButtonClick() {
+    const eventCardsContainer = document.getElementById('event-cards-container');
+
+    const eventCardsImg = document.createElement('img');
+    eventCardsImg.src = './assets/eventCards.png';
+    eventCardsImg.alt = 'Event Cards';
+
+    eventCardsContainer.innerHTML = '';
+    eventCardsContainer.appendChild(eventCardsImg);
+    eventCardsContainer.style.display = eventCardsContainer.style.display === 'none' ? 'block' : 'none';
+}
+
+
+/** 
+ * Dice Menu
 */
+
 let selectedDice = [];
 const rollHistory = JSON.parse(localStorage.getItem('rollHistory') || '{}');
 
@@ -156,7 +166,7 @@ function onDragonClick() {
     // Toggle the visibility of the dice container
     diceContainer.classList.toggle('hidden');
     diceContainer.classList.toggle('visible');
-    resultLabel
+
 }
 
 function updateSelectedDiceDisplay() {
@@ -178,10 +188,66 @@ function rollDice() {
     const timestamp = new Date().toLocaleString();
     let totalResult = selectedDice.reduce((sum, nextDie) => sum + nextDie.roll(), 0);
     rollHistory[timestamp] = totalResult;
-    
+
     localStorage.setItem('rollHistory', JSON.stringify(rollHistory));
     resultLabel.innerText = `Total Result: ${totalResult}`;
-    
+
     selectedDice = [];
-    
+
 }
+
+/**
+ * Roll History Menu
+ */
+
+function showHistory() { // shows roll history
+    var historyList = document.getElementById("historyList");
+    historyList.innerHTML = "";
+
+    for (const timestamp in rollHistory) {
+        const listItem = document.createElement("li");
+        listItem.textContent = `${timestamp}: ${rollHistory[timestamp]}`;
+        historyList.appendChild(listItem);
+    }
+
+    historyModal.style.display = "block";
+}
+
+function onHistoryModalClick() {
+    let historyModal = document.getElementById("historyModal");
+    let historyModalSpan = historyModal.getElementsByClassName("close")[0];
+
+}
+
+function onHistoryModalSpanClick() {
+    historyModal.style.display = "none";
+}
+
+window.onclick = function (event) { // if user clicks anywhere but the modal, close it
+    if (event.target == historyModal) {
+        historyModal.style.display = "none";
+    }
+}
+
+window.addEventListener('beforeunload', () => {
+    localStorage.removeItem('rollHistory');
+});
+
+/**
+ * Scene Menu
+ * TODO: should this be merged? whys this so far down compared to the Scenario Menu? whats the difference??
+ */
+
+const scenarioButtons = document.querySelectorAll('.select-scenario-btn');
+
+scenarioButtons.forEach((button, index) => {
+    button.addEventListener('click', () => {
+        const selectedScenario = document.querySelectorAll('.scenario')[index];
+        const scenarioTitle = selectedScenario.querySelector('.scenario-title').textContent;
+        const scenarioNarration = selectedScenario.querySelector('.scenario-narration').textContent;
+
+        // OVER HERE IS WHERE THE CALL TO SAVE/ADD THE SCENARIO FROM THE SCENARIO MENU TO THE CURRENT NODE SHOULD BE WRITTEN!
+        console.log(`Selected Scenario: ${scenarioTitle}`);
+        console.log(`Narration: ${scenarioNarration}`);
+    });
+});

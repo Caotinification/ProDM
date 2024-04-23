@@ -134,7 +134,7 @@
     <img id="down-arrow" src="./assets/Arrow.png" alt="Down Arrow">
   </button>
   <button id="plus-button">
-    <img id="plus" src="./assets/plus.png" alt="Plus">
+    <img id="plus" src="./assets/plus.png" alt="Plus" onclick="onPlusButtonClick()">
   </button>
   <!-- Event Maker Button -->
   <button id="event-maker-button">Event Maker</button>
@@ -157,9 +157,9 @@
   </div>
 
   <!-- History Modal -->
-  <div id="historyModal" class="modal">
+  <div id="historyModal" class="modal" onclick="onHistoryModalClick()">
     <div class="modal-content">
-      <span class="close">&times;</span>
+      <span class="close" onclick="onHistoryModalSpanClick()">&times;</span>
       <h2>Roll History</h2>
       <ul id="historyList"></ul>
     </div>
