@@ -104,7 +104,7 @@ class EventNode {
 
 
 /*
-    Sword Image Handling
+    Event Creator Menu
 */
 function dropSword(swordImg) {
     swordImg.classList.add('dropped');
@@ -137,4 +137,51 @@ function onPullTabClick() {
         pullTab.classList.remove('open');
         sceneMenuContainer.classList.remove('open');
     }
+}
+
+/*
+    Dice Menu
+*/
+let selectedDice = [];
+const rollHistory = JSON.parse(localStorage.getItem('rollHistory') || '{}');
+
+function onDragonClick() {
+    const dragonButton = document.getElementById('dragon-button');
+    const diceContainer = document.getElementById('dice-container');
+    const resultLabel = document.getElementById('result');
+
+    // Toggle the "active" class on click
+    dragonButton.classList.toggle('active');
+
+    // Toggle the visibility of the dice container
+    diceContainer.classList.toggle('hidden');
+    diceContainer.classList.toggle('visible');
+    resultLabel
+}
+
+function updateSelectedDiceDisplay() {
+    document.getElementById("result").innerText = `Rolling: ${selectedDice.join(' + ')}`;
+}
+
+function addDie(numSides) {
+    let newDice = new Dice(numSides);
+    selectedDice.push(newDice);
+    updateSelectedDiceDisplay();
+}
+
+function rollDice() {
+    const resultLabel = document.getElementById('result');
+    if (selectedDice.length === 0) {
+        resultLabel.innerText = 'No dice selected.';
+        return;
+    }
+    const timestamp = new Date().toLocaleString();
+    let totalResult = selectedDice.reduce((sum, nextDie) => sum + nextDie.roll(), 0);
+    rollHistory[timestamp] = totalResult;
+    
+    localStorage.setItem('rollHistory', JSON.stringify(rollHistory));
+    resultLabel.innerText = `Total Result: ${totalResult}`;
+    
+    selectedDice = [];
+    
 }
