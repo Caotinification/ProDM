@@ -163,6 +163,27 @@ window.onclick = function (event) {
     }
 }
 
+/**
+ * Scenes
+ */
+
+document.addEventListener('DOMContentLoaded', () => {
+    const scenarioButtons = document.querySelectorAll('.select-scenario-btn');
+
+    scenarioButtons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+            const selectedScenario = document.querySelectorAll('.scenario')[index];
+            const scenarioTitle = selectedScenario.querySelector('.scenario-title').textContent;
+            const scenarioNarration = selectedScenario.querySelector('.scenario-narration').textContent;
+
+            // OVER HERE IS WHERE THE CALL TO SAVE/ADD THE SCENARIO FROM THE SCENARIO MENU TO THE CURRENT NODE SHOULD BE WRITTEN!
+            console.log(`Selected Scenario: ${scenarioTitle}`);
+            console.log(`Narration: ${scenarioNarration}`);
+
+        });
+    });
+})
+
 // Form submission handling
 function onNewEventSubmission(event) {
     event.preventDefault(); // Prevent default form submission
@@ -221,7 +242,6 @@ function rollDice() {
     resultLabel.innerText = `Total Result: ${totalResult}`;
 
     selectedDice = [];
-
 }
 
 /**
@@ -261,23 +281,3 @@ window.addEventListener('beforeunload', () => {
     localStorage.removeItem('rollHistory');
 });
 
-/**
- * Scene Menu
- * TODO: should this be merged? whys this so far down compared to the Scenario Menu? whats the difference??
- */
-
-document.addEventListener('DOMContentLoaded', () => {
-    const scenarioButtons = document.querySelectorAll('.select-scenario-btn');
-
-    scenarioButtons.forEach((button, index) => {
-        button.addEventListener('click', () => {
-            const selectedScenario = document.querySelectorAll('.scenario')[index];
-            const scenarioTitle = selectedScenario.querySelector('.scenario-title').textContent;
-            const scenarioNarration = selectedScenario.querySelector('.scenario-narration').textContent;
-
-            // OVER HERE IS WHERE THE CALL TO SAVE/ADD THE SCENARIO FROM THE SCENARIO MENU TO THE CURRENT NODE SHOULD BE WRITTEN!
-            console.log(`Selected Scenario: ${scenarioTitle}`);
-            console.log(`Narration: ${scenarioNarration}`);
-        });
-    });
-})
