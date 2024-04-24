@@ -87,14 +87,17 @@
   <div id="events-menu-container">
     <img id="events-menu" src="./assets/scenemenu.png" alt="Events Menu">
     <div id="events-container">
-      <div class="event">
+      
+      <div id="baseEvent" hidden>
         <h3 class="event-title">Root</h3>
-        <p class="scenario-narration">Where it all begins!</p>
-        <img class="scenario-image" src="./assets/scenario1.jpg" alt="Scenario 1 Image">
+        <p class="event-narration">Where it all begins!</p>
+        <img class="event-image" src="./assets/scenario1.jpg" alt="Event 1 Image">
         <br>
         <button class="select-event-btn">Select Event</button>
       </div>
+
     </div>
+    
   </div>
 
   <!-- Pulltab Container -->
@@ -162,9 +165,9 @@
         <label for="title">Title:</label><br>
         <input type="text" id="title" name="title" required><br>
         <label for="narration">Narration:</label><br>
-        <textarea id="narration" name="narration" rows="4" required></textarea><br>
+        <textarea id="narration" name="narration" rows="4"></textarea><br>
         <label for="image">Upload Image:</label><br>
-        <input type="file" id="image" name="image" accept="image/*" required><br>
+        <input type="file" id="image" name="image" accept="image/*"><br>
         <button type="submit">Submit</button>
       </form>
     </div>

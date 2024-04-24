@@ -208,12 +208,10 @@ body {
   position: relative;
   height: 2615px;
   overflow-y: auto;
-  top: -2028px;
+  top: -1900px;
   transform: scale(0.50);
-  right: 255px;
+  right: 0px;
 }
-
-
 
 
 #brown-background {

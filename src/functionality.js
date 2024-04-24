@@ -112,10 +112,10 @@ class EventNode {
  * Event Creator Menu
 */
 function onPullTab2Click() {
-    const pullTab = document.getElementById('pulltab2-container');
+    const pullTab2 = document.getElementById('pulltab2-container');
     const eventsMenuContainer = document.getElementById('events-menu-container');
 
-    pullTab.classList.toggle('open');
+    pullTab2.classList.toggle('open');
     eventsMenuContainer.classList.toggle('open');
 }
 
@@ -184,21 +184,31 @@ document.addEventListener('DOMContentLoaded', () => {
 let storyNodes = new Map();
 
 function onNewEventSubmission(event) {
-    const swordContainer = document.getElementById('sword-container');
     event.preventDefault(); // Prevent default form submission
+
+    const eventsContainer = document.getElementById('events-container');
 
     // Retrieve form data
     const title = document.getElementById("title").value;
     const narration = document.getElementById("narration").value;
     const image = document.getElementById("image").files[0];
 
+
     if (storyNodes.has(title)) {
-        //tell user this node has a duplicate title!
+        alert(`${title} already exists as a story event.`)
         return;
     }
+
+    let newEventHTML = document.getElementById('baseEvent').cloneNode(true);
+    let children = newEventHTML.children;
+    newEventHTML.id = `event-${title}`;
+    children[0].innerText = title;
+    children[1].innerText = narration;
+    children[2].src = image.path;
     
     storyNodes[title] = new EventNode(title, narration, image);
-
+    eventsContainer.appendChild(newEventHTML);
+    newEventHTML.hidden = false;
     // Close the modal
     eventMakerModal.style.display = "none";
 }
