@@ -34,10 +34,15 @@ class InvariantViolation extends Error { }
 class SelfLoopViolation extends Error { }
 
 class EventNode {
-
-    constructor(name, description) {
+    
+    description = "";
+    coverImage = null;
+    
+    #outcomes = new Map();
+    constructor(name, description, coverImage) {
         this.name = name;
         this.description = description ?? this.description;
+        this.coverImage = coverImage;
     }
 
     add(newEvent) {
@@ -45,11 +50,11 @@ class EventNode {
             throw new SelfLoopViolation(`Attempt to add a self loop on ${this.name}.`)
         }
         this.#invariant(newEvent);
-        return this.outcomes.set(newEvent.name, newEvent);
+        return this.#outcomes.set(newEvent.name, newEvent);
     }
 
     remove(newEvent) { // add and remove accept different types. TODO: possible redesign?
-        return this.outcomes.delete(newEvent);
+        return this.#outcomes.delete(newEvent);
     }
 
     *[Symbol.iterator]() {
@@ -69,7 +74,7 @@ class EventNode {
         let [numNodes, numConnections] = [0, 0];
         for (const [outcome, _] of this) {
             numNodes++;
-            numConnections += outcome.outcomes.size;
+            numConnections += outcome.#outcomes.size;
         }
         return [numNodes, numConnections];
     }
@@ -85,7 +90,7 @@ class EventNode {
     #invariant(newest) { // for a connected tree, the number of connections is always one less than the number of nodes.
         let [numNodes, numConnections] = this.getSize();
         numNodes += 1; //newest counts as one
-        numConnections += newest.outcomes.size + 1; // newest may have connections as well, plus 1 for a simulated connection
+        numConnections += newest.#outcomes.size + 1; // newest may have connections as well, plus 1 for a simulated connection
 
         if (numConnections != numNodes - 1) { // |E| = |V| - 1
             throw new InvariantViolation(`An invariant violation has occurred with the addition of ${newest.name} to ${this.name}.`); // TODO: make this error more descriptive
@@ -94,9 +99,9 @@ class EventNode {
 
     *#preorder(depth = 0) { // preorder traversal with depth tracking
         yield [this, depth];
-        if (this.outcomes.size > 0) {
-            for (const outcome of this.outcomes.values()) {
-                yield* outcome.preorder(depth + 1);
+        if (this.#outcomes.size > 0) {
+            for (const outcome of this.#outcomes.values()) {
+                yield* outcome.#preorder(depth + 1);
             }
         }
     }
@@ -106,21 +111,12 @@ class EventNode {
 /** 
  * Event Creator Menu
 */
-function dropSword(swordImg) {
-    swordImg.classList.add('dropped');
-}
+function onPullTab2Click() {
+    const pullTab = document.getElementById('pulltab2-container');
+    const eventsMenuContainer = document.getElementById('events-menu-container');
 
-function retractSword(swordImg) {
-    swordImg.classList.remove('dropped');
-    swordImg.classList.add('retracted');
-    setTimeout(() => {
-        swordImg.classList.remove('retracted');
-    }, 1000);
-}
-
-function onSwordClick() {
-    const swordImg = document.getElementById('sword');
-    swordImg.classList.contains('dropped') ? retractSword(swordImg) : dropSword(swordImg);
+    pullTab.classList.toggle('open');
+    eventsMenuContainer.classList.toggle('open');
 }
 
 /** 
@@ -167,6 +163,7 @@ window.onclick = function (event) {
  * Scenes
  */
 
+
 document.addEventListener('DOMContentLoaded', () => {
     const scenarioButtons = document.querySelectorAll('.select-scenario-btn');
 
@@ -175,7 +172,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const selectedScenario = document.querySelectorAll('.scenario')[index];
             const scenarioTitle = selectedScenario.querySelector('.scenario-title').textContent;
             const scenarioNarration = selectedScenario.querySelector('.scenario-narration').textContent;
-
             // OVER HERE IS WHERE THE CALL TO SAVE/ADD THE SCENARIO FROM THE SCENARIO MENU TO THE CURRENT NODE SHOULD BE WRITTEN!
             console.log(`Selected Scenario: ${scenarioTitle}`);
             console.log(`Narration: ${scenarioNarration}`);
@@ -185,13 +181,23 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 // Form submission handling
+let storyNodes = new Map();
+
 function onNewEventSubmission(event) {
+    const swordContainer = document.getElementById('sword-container');
     event.preventDefault(); // Prevent default form submission
 
     // Retrieve form data
-    var title = document.getElementById("title").value;
-    var narration = document.getElementById("narration").value;
-    var image = document.getElementById("image").files[0];
+    const title = document.getElementById("title").value;
+    const narration = document.getElementById("narration").value;
+    const image = document.getElementById("image").files[0];
+
+    if (storyNodes.has(title)) {
+        //tell user this node has a duplicate title!
+        return;
+    }
+    
+    storyNodes[title] = new EventNode(title, narration, image);
 
     // Close the modal
     eventMakerModal.style.display = "none";

@@ -57,14 +57,7 @@ body {
   background-color: #0056b3;
 }
 
-#pulltab {
-  display: block;
-  transform: scaleX(-1);
-}
 
-#pulltab-container.open {
-  right: 150px;
-}
 
 #dragon-container {
   position: fixed;
@@ -89,6 +82,24 @@ body {
 
 #dice-container.visible {
   top: 25%;
+}
+
+/* SCENE MENU */
+#pulltab-container {
+  position: fixed;
+  top: -141px;
+  right: -57px;
+  transform: rotate(-90deg) scale(0.33);
+  transition: right 0.5s ease;
+}
+
+#pulltab {
+  display: block;
+  transform: scaleX(-1);
+}
+
+#pulltab-container.open {
+  right: 150px;
 }
 
 #scene-menu-container {
@@ -161,36 +172,48 @@ body {
   transform: translateY(-750px);
 }
 
-#sword-container {
-  position: relative;
-  height: 90vh;
-  overflow: visible;
-}
+/*Events*/
 
-#sword {
-  position: absolute;
-  top: -1800px;
-  left: -142px;
-  transform: scale(0.5);
-  z-index: 9999;
-  transition: top 1s ease;
-}
-
-#sword.dropped {
-  top: calc(100vh - 1200px - 100px);
-}
-
-#sword.retracted {
-  top: -1800px;
-}
-
-#pulltab-container {
+#pulltab2-container {
   position: fixed;
   top: -141px;
-  right: -57px;
-  transform: rotate(-90deg) scale(0.33);
-  transition: right 0.5s ease;
+  left: -50px;
+  transform: rotate(90deg) scale(0.33);
+  transition: left 0.5s ease;
 }
+
+#pulltab2 {
+  display: block;
+  transform: scaleX(-1);
+}
+
+#pulltab2-container.open {
+  left: 299px;
+}
+
+#events-menu-container {
+  position: absolute;
+  top: -1432px;
+  left: -874px;
+  transition: left 0.5s ease;
+  transform: scale(0.33);
+}
+
+#events-menu-container.open {
+  top: -1432px;
+  left: -527px;
+}
+
+#events-container {
+  position: relative;
+  height: 2615px;
+  overflow-y: auto;
+  top: -2028px;
+  transform: scale(0.50);
+  right: 255px;
+}
+
+
 
 
 #brown-background {
